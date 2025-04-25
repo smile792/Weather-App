@@ -1,29 +1,48 @@
-import { WeatherButton } from "./MyButton/weatherButton";
+import { Link } from "react-router-dom";
+import { MyButton } from "./MyButton/MyButton";
+import { WeatherText } from "./weatherText";
+import { MyInput } from "./MyInput/MyInput";
+import { useState } from "react";
 
 export const Weatherinterface = ({ weather, setCity }) => {
-  console.log(weather);
+  const [text, setText] = useState("");
+  const changeText = (e) => {
+    setText(e.target.value);
+  };
+  const onText = () => {
+    setCity(text);
+  };
   return (
     <>
       <div className="weather-interface">
         <div className="weather-interface-btn">
-          <WeatherButton
+          <MyButton
             children={"Georgievsk"}
             onClick={() => setCity("Georgievsk")}
           />
-          <WeatherButton
+          <MyButton
             children={"Pyatigorsk"}
             onClick={() => setCity("Pyatigorsk")}
           />
-          <WeatherButton
+          <MyButton
             children={"Zheleznovodsk"}
             onClick={() => setCity("Zheleznovodsk")}
           />
         </div>
-        <div className="weather-text">
-          <h1>{weather.cityName}</h1>
-          <p>Температура {Math.round(weather.temperature)} °C</p>
-          <p>Ощущается как {Math.round(weather.feelsLikeTemperature)} °C</p>
-          <p>Скорость метра {weather.windSpeed} м/с</p>
+        <div className="weather-interface-input">
+          <MyInput
+            placeholder={"Название города на английском"}
+            value={text}
+            type={"text"}
+            onChange={changeText}
+          />
+          <MyButton children={"Получить информацию"} onClick={onText} />
+        </div>
+        <WeatherText weather={weather} />
+        <div className="weather-interface-btn-bottom">
+          <Link to={"/weatherByLonLat"}>
+            <MyButton children={"Поиск по координатам"} />
+          </Link>
         </div>
       </div>
     </>
