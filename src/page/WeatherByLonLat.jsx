@@ -9,14 +9,23 @@ export const WeatherByLonLat = () => {
   const [weatherByLonLat, setWeatherByLonLat] = useState([]);
   const [lon, setLon] = useState(43.0706669);
   const [lat, setLat] = useState(44.039775);
+  const [errorMessage, setErrorMessage] = useState("");
   const [fetching, isLoading, error] = useFetching(async () => {
     const response = await WeatherService.getByLonLat(lon, lat);
     setWeatherByLonLat(response.data);
   });
   useEffect(() => {
     fetching();
-    console.log(weatherByLonLat);
   }, []);
+
+  const handleSubmit = () => {
+    if (!lon || !lat) {
+      setErrorMessage("Поля не должны быть пустыми");
+      return;
+    }
+    setErrorMessage("");
+    fetching();
+  };
 
   return (
     <div>
@@ -39,8 +48,9 @@ export const WeatherByLonLat = () => {
           onChange={(e) => setLat(e.target.value)}
         />
       </div>
+      {errorMessage && <div className="error-input">{errorMessage}</div>}
       <div className="weatherByLonLat-btn">
-        <MyButton onClick={fetching}>Получить информацию</MyButton>
+        <MyButton onClick={handleSubmit}>Получить информацию</MyButton>
         <Link to={"/"}>
           <MyButton>Поиск по городу</MyButton>
         </Link>

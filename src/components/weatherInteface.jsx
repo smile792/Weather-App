@@ -3,19 +3,23 @@ import { MyButton } from "./MyButton/MyButton";
 import { WeatherText } from "./weatherText";
 import { MyInput } from "./MyInput/MyInput";
 import { useState } from "react";
+import { MySelect } from "./MySelect/MySelect";
 
 export const Weatherinterface = ({ weather, setCity }) => {
   const [text, setText] = useState("");
   const [value, setValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const changeText = (e) => {
-    setText(e.target.value);
+    const lettersOnly = e.target.value.replace(/[^a-zA-Z\s-]/g, "");
+    setText(lettersOnly);
   };
   const onText = () => {
-    const isValid = /^[A-Za-z]+(?:[\s-][A-Za-z]+)*$/.test(text.trim());
-    if (!isValid) {
-      alert("Введите корректное название города (только буквы)");
+    if (!text) {
+      setErrorMessage("Поле не может быть пустым");
       return;
     }
+    setErrorMessage("");
     setCity(text);
   };
 
@@ -26,14 +30,6 @@ export const Weatherinterface = ({ weather, setCity }) => {
   return (
     <>
       <div className="weather-interface">
-        <select value={value} onChange={handleChange}>
-          <option disabled value="">
-            Выберите город
-          </option>
-          <option value="Pyatigorsk">Pyatigorsk</option>
-          <option value="Zheleznovodsk">Zheleznovodsk</option>
-          <option value="Georgievsk">Georgievsk</option>
-        </select>
         <div className="weather-interface-input">
           <MyInput
             placeholder={"Название города на английском"}
@@ -41,10 +37,21 @@ export const Weatherinterface = ({ weather, setCity }) => {
             type={"text"}
             onChange={changeText}
           />
-          <MyButton children={"Получить информацию"} onClick={onText} />
+          <MySelect
+            defaultValue={"Выберите город"}
+            value={value}
+            onChange={handleChange}
+            options={[
+              { value: "Pyatigorsk", name: "Pyatigorsk" },
+              { value: "Zheleznovodsk", name: "Zheleznovodsk" },
+              { value: "Georgievsk", name: "Georgievsk" },
+            ]}
+          />
         </div>
+        {errorMessage && <div className="error-input">{errorMessage}</div>}
         <WeatherText weather={weather} />
-        <div className="weather-interface-btn-bottom">
+        <div className="weather-interface-btn">
+          <MyButton children={"Получить информацию"} onClick={onText} />
           <Link to={"/weatherByLonLat"}>
             <MyButton children={"Поиск по координатам"} />
           </Link>

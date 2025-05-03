@@ -1,31 +1,31 @@
-*{
- padding: 0;
- margin: 0;
- box-sizing: border-box;
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
-html{
+
+html {
     background-color: #686A6C;
 }
+
+
 #root {
     display: flex;
-    flex-direction: column;
-    align-items: center ;
-  }
+    justify-content: center;
+}
+
+.App {
+    width: 400px;
+    height: 200px;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
-.weather-interface-btn  {
-    margin-top: 10px;
-    display: flex;
-    
-}
-.weather-interface-btn-bottom {
-    display: flex;
-    justify-content: center;
-    margin-top: 5px;
-}
+
+
 .weather-text {
     margin-top: 10px;
     color: #dbce14;
@@ -40,9 +40,11 @@ input::-webkit-inner-spin-button {
     margin-top: 5px;
     gap: 10px;
 }
-.weatherByLonLat-btn {
+
+.weatherByLonLat-btn, .weather-interface-btn {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     margin-top: 5px;
 }
 
@@ -50,4 +52,8 @@ input::-webkit-inner-spin-button {
     display: flex;
     align-items: center;
     margin-top: 5px;
+}
+
+.error-input {
+    color: red;
 }
