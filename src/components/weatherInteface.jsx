@@ -21,6 +21,7 @@ export const Weatherinterface = ({ weather, setCity }) => {
     }
     setErrorMessage("");
     setCity(text);
+    setText("");
   };
 
   const handleChange = (e) => {

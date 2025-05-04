@@ -14,13 +14,8 @@ export const WeatherByCity = () => {
   }, [city]);
   return (
     <div>
-      {error ? (
-        <h1>Упс, ошибка... {error}</h1>
-      ) : isLoading ? (
-        <h1>Загрузка...</h1>
-      ) : (
-        <Weatherinterface weather={weatherCity} setCity={setCity} />
-      )}
+      {error && <h1>Упс, ошибка... {error}</h1>}
+      <Weatherinterface weather={weatherCity} setCity={setCity} />
     </div>
   );
 };
